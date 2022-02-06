@@ -2,6 +2,7 @@ import axios from 'axios'
 import config from '../config'
 import { ElMessage } from 'element-plus'
 import router from '../router'
+import storage from './storage'
 const TOKEN_ERROR = 'Token认证失败,请重新登录'
 const NETWORK_ERROR = '网路请求异常,请稍后重试'
 // 创建axios实例对象 添加全局配置
@@ -14,7 +15,9 @@ const service = axios.create({
 service.interceptors.request.use((req) => {
   // 下面是jwt的token的验证的header 暂且写在这里
   const headers = req.headers
-  if (!headers.Authorization) headers.Authorization = 'llr'
+  const {token} = storage.getItem('userInfo')
+  if (!headers.Authorization) headers.Authorization = 'Bear '+ token
+  
   return req
 })
 

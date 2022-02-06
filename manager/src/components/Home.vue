@@ -64,7 +64,6 @@
 import TreeMenu from "./TreeMenu.vue";
 import breadcrumb from "./Breadcrumb.vue"
 import {Setting,Fold,Bell,ArrowDown} from '@element-plus/icons'
-import BreadCurb from './BreadCurb.vue';
 export default {
   name: "home",
   components:{
@@ -74,7 +73,6 @@ export default {
     arrowDown: ArrowDown,
     TreeMenu,
     breadcrumb,
-    BreadCurb
   },
   data(){
     return {
