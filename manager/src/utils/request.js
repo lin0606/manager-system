@@ -13,10 +13,10 @@ const service = axios.create({
 
 // 请求的拦截
 service.interceptors.request.use((req) => {
-  // 下面是jwt的token的验证的header 暂且写在这里
+  // jwt的token的验证的header
   const headers = req.headers
-  const {token} = storage.getItem('userInfo')
-  if (!headers.Authorization) headers.Authorization = 'Bear '+ token
+  const {token=''} = storage.getItem('userInfo')||{}
+  if (!headers.Authorization) headers.Authorization = 'Bearer '+ token
   
   return req
 })

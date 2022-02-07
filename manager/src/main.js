@@ -16,7 +16,7 @@ const app = createApp(App)
 app.config.globalProperties.$request = request
 app.config.globalProperties.$storage = storage
 app.config.globalProperties.$api = api
-app.use(router).use(ElementPlus).use(store).mount('#app')
+app.use(router).use(ElementPlus,{size:'small'}).use(store).mount('#app')
 
 // development
 console.log("环境变量", import.meta.env);

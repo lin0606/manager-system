@@ -33,7 +33,7 @@ const routes = [
             meta:{
               title:'用户管理'
             },
-            component:()=> import('../views/Welcome.vue'),
+            component:()=> import('../views/user.vue'),
           }
         ]
       }
