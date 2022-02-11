@@ -29,7 +29,7 @@ const routes = [
         children:[
           {
             name:'user',
-            path:'user',
+            path:'/user',
             meta:{
               title:'用户管理'
             },

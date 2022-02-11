@@ -21,7 +21,7 @@ const EnvConfig = {
 
 export default {
   env,
-  // mock: true,
+  mock: false,
   ...EnvConfig[env],
   // localstorage的封装的命名空间 在utils的storage中
   namespace: 'manage'

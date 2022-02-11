@@ -10,7 +10,7 @@ const CODE = {
 
 module.exports = {
   //分页的封装  
-  pager (pageNum = 1, pageSize = 10) {
+  pager ({pageNum = 1, pageSize = 10}) {
     // 字符串转数值
     pageNum *= 1//页数
     pageSize *= 1//一页的条数

@@ -28,3 +28,4 @@ const userSchema = mongoose.Schema({
     remark:String//增加备用字段
 })
 module.exports = mongoose.model('users',userSchema,"users")
+ 

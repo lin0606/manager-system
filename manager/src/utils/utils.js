@@ -13,9 +13,9 @@ export default{
             's+': date.getSeconds()
         }
         for(let k in o){
-            if(new RegExp(`(${k})`).test(k)){
+            if(new RegExp(`(${k})`).test(fmt)){
                 const val = o[k] + '';
-                fmt = fmt.replace(RegExp.$1,val)
+                fmt = fmt.replace(RegExp.$1,RegExp.$1.length == 1 ? val : ('00'+val).substring(val.length))
             }
         }
         return fmt;

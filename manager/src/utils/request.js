@@ -52,15 +52,17 @@ function request (options) {
     // 后面组件中在调用接口的时候 传过来的都在对象的data属性中 
     options.params = options.data
   }
-  // config中的mock一直为true
+
+  // config全局中的mock一直为true
+  let isMock = config.mock
   if (typeof options.mock !== 'undefined') {
-    config.mock = options.mock
+    isMock = options.mock
   }
   // 注意！！p0级bug
   if (config.env === 'prod') {
     service.defaults.baseURL = config.baseApi
   } else {
-    service.defaults.baseURL = config.mock ? config.mockApi : config.baseApi
+    service.defaults.baseURL = isMock ? config.mockApi : config.baseApi
   }
   return service(options)
 }
