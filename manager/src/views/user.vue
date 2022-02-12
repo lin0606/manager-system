@@ -3,13 +3,13 @@
     <div class="query-form">
       <el-form :inline="true" :model="user" ref="form">
         <el-form-item lable="用户Id" prop="userId">
-          <el-input v-model="userId" placeholder="请输入用户id"></el-input>
+          <el-input v-model="user.userId" placeholder="请输入用户id"></el-input>
         </el-form-item>
         <el-form-item lable="用户名" prop="userName">
-          <el-input v-model="userName" placeholder="请输入用户名"></el-input>
+          <el-input v-model="user.userName" placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item lable="状态" prop="state">
-          <el-select>
+          <el-select v-model="user.state">
             <el-option :value="0" label="所有"></el-option>
             <el-option :value="1" label="在职"></el-option>
             <el-option :value="2" label="离职"></el-option>
