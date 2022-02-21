@@ -78,5 +78,32 @@ export default {
       mock:true,
       data:params
     })
+  },
+  // 角色列表
+  roleList(){
+    return request({
+      url:'/roles.list',
+      method:'get',
+      mock:true,
+    })
+  },
+  // 角色新增提交接口
+  roleOperate(params){
+    return request({
+      url:'/role/operate',
+      method:'post',
+      mock:true,
+      data:params
+    })
+  },
+  // 权限设置提交
+  updatePermission(params){
+    return request({
+      url:'/roles/update/permission',
+      method:'post',
+      mock:true,
+      data:params
+    })
   }
+
 }
