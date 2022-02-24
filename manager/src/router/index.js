@@ -68,4 +68,23 @@ const router = createRouter({
   routes,
 });
 
+// 是否有权限
+function checkPermission(path){
+  // ？？？？？？？？？？？？？
+ let hasPermission =  router.getRoutes().filter(route=>route.path == path).length;
+ console.log(router.getRoutes().filter(route=>route.path == path)) 
+ if(hasPermission){
+    return true
+  }else{
+    return false
+  }
+}
+router.beforeEach((to,from,next)=>{
+  if(checkPermission(to.path)){
+    document.title = to.meta.title;
+    next()
+  }else{
+    next('/404')
+  }
+})
 export default router;

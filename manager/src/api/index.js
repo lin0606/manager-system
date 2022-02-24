@@ -24,6 +24,15 @@ export default {
       method: 'get',
       mock: true,
       data: {}
+    }) 
+  },
+  // 根据用户权限显示菜单
+  PermissionList(){
+    return request({
+      url: '/users/getPermissionList',
+      method: 'get',
+      mock: true,
+      data: {}
     })
   },
   // 用户列表
@@ -33,6 +42,13 @@ export default {
       method:'get',
       mock:true,
       data:params
+    })
+  },
+  userAllList(){
+    return request({
+      url:'/users/all/list',
+      method:'get',
+      mock:true,
     })
   },
   //用户单个删除 
@@ -54,11 +70,12 @@ export default {
     })
   },
   // 部门列表
-  getDeptList(){
+  getDeptList(params){
     return request({
       url:'/dept/list',
       method:'get',
       mock:true,
+      data:params
     })
   },
   // user新增提交接口
@@ -100,6 +117,15 @@ export default {
   updatePermission(params){
     return request({
       url:'/roles/update/permission',
+      method:'post',
+      mock:true,
+      data:params
+    })
+  },
+  // 部门操作
+  deptOperate(params){
+    return request({
+      url:'/dept/operate',
       method:'post',
       mock:true,
       data:params

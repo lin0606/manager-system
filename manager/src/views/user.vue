@@ -6,7 +6,10 @@
           <el-input v-model="user.userId" placeholder="请输入用户id"></el-input>
         </el-form-item>
         <el-form-item lable="用户名" prop="userName">
-          <el-input v-model="user.userName" placeholder="请输入用户名"></el-input>
+          <el-input
+            v-model="user.userName"
+            placeholder="请输入用户名"
+          ></el-input>
         </el-form-item>
         <el-form-item lable="状态" prop="state">
           <el-select v-model="user.state">
@@ -24,8 +27,15 @@
     </div>
     <div class="base-table">
       <div class="action">
-        <el-button type="primary" @click="handleCreate">新增</el-button>
-        <el-button type="danger" @click="handlePatchDelete">批量删除</el-button>
+        <el-button type="primary" @click="handleCreate" v-has="'user-add'"
+          >新增</el-button
+        >
+        <el-button
+          type="danger"
+          @click="handlePatchDelete"
+          v-has="'user-parse-delete'"
+          >批量删除</el-button
+        >
       </div>
       <el-table
         :data="userList.arr"
@@ -48,6 +58,7 @@
               type="primary"
               size="mini"
               @click="handleEdit(scope.row)"
+              v-has="'user-edit'"
             >
               编辑
             </el-button>
@@ -55,6 +66,7 @@
               type="danger"
               size="mini"
               @click="handleDelete(scope.row)"
+              v-has="'user-delete'"
               >删除</el-button
             >
           </template>
@@ -255,7 +267,7 @@ export default {
     };
     const checkUserIds = ref([]);
     // 批量删除
-    const handlePatchDelete = () => {
+    const handlePatchDelete = async () => {
       if (checkUserIds.value.length == 0) {
         proxy.$message.error("没有选，请选择要删除的用户");
         return;
@@ -271,7 +283,7 @@ export default {
       }
     };
     // 批量删除选择的函数
-    const handleSelectionChange = async (list) => {
+    const handleSelectionChange = (list) => {
       let arr = [];
       list.forEach((ele) => {
         arr.push(ele.userId);

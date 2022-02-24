@@ -76,6 +76,7 @@ export default {
   },
   mounted() {
     this.getNoticeCount();
+    this.getMenuList();
   },
   methods: {
     handleLogout(key) {
@@ -92,6 +93,12 @@ export default {
       const res = await this.$api.noticeCount();
       this.noticeCount = res;
     },
+    async getMenuList(){
+      const {menuList,actionList} = await this.$api.permissionList();
+      this.userMenu = menuList;
+      this.$store.commit('saveMenuList',menuList);
+      this.$store.commit('saveActionList',actionList)
+    }
   },
 };
 </script>

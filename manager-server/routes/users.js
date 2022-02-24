@@ -1,6 +1,8 @@
 const router = require("koa-router")();
 const User = require("../models/userSchema");
 const Counter = require("../models/counterSchema");
+const Menu = require("../models/menuSchema");
+const Role = require("../models/roleSchema");
 const utils = require("../utils/utils");
 const jwt = require("jsonwebtoken");
 const util = require("../utils/utils");
@@ -18,7 +20,7 @@ router.post("./login", async (ctx) => {
     const res = await User.findOne(
       {
         userName,
-        userPwd: md5(userPwd)
+        userPwd: md5(userPwd),
       },
       "userId userName userEmail state role dept"
     );
@@ -145,8 +147,65 @@ router.post("/operate", async (ctx) => {
         ctx.body = util.fail("更新失败");
       }
     }
-    
   }
 });
+router.get("/all/list", async (ctx) => {
+  try {
+    const list = await User.find({}, "userId userName userEmail");
+    ctx.body = util.success(list);
+  } catch (error) {
+    ctx.body = util.fail(error.stack);
+  }
+});
+
+// 权限菜单
+router.get("/getPermissionList", async (ctx) => {
+  let authorization = ctx.request.headers.authorization;
+  let { data } = util.decode(authorization);
+  let menuList = await getMenuList(data.role, data.roleList);
+  let actionList = await getActionList(JSON.parse(JSON.stringify(menuList)))
+  ctx.body = util.success({menuList,actionList});
+  // ctx.body = util.success(userInfo)
+});
+
+async function getMenuList(userRole, rolekeys) {
+  let rootList = [];
+  if (userRole == 0) {
+    rootList = (await Menu.find({})) || [];
+  } else {
+    let roleList = await Role.find({ _id: { $in: rolekeys } });
+    let permissionList = [];
+    roleList.map((role) => {
+      let { checkedKeys, halfCheckedKeys } = role.permissionList;
+      permissionList = permissionList.concat(
+        ...checkedKeys,
+        ...halfCheckedKeys
+      );
+    });
+    permissionList = [...new Set(permissionList)];
+    rootList = await Menu.find({ _id: { $in: permissionList } });
+  }
+  return util.getTree(rootList, null, []);
+}
+
+function getActionList(list){
+  const actionList = []
+  const deep = (arr) => {
+    while (arr.length) {
+      let item = arr.pop();
+      if (item.action) { 
+        item.action.map(action =>{
+          actionList.push(action.MenuCode)
+        })
+      }
+      // 相当于一级菜单，递归将二级菜单展示出来
+      if (item.children && !item.action) {
+        deep(item.children);
+      }
+    }
+  };
+  deep(list);
+  return actionList
+}
 
 module.exports = router;

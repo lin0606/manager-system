@@ -315,13 +315,12 @@ export default {
           if (item.children && item.action) {
             actionMap[item_id] = item.menuName;
           }
-          // 相当于一级菜单，我们需要递归将二级菜单展示出来
+          // 相当于一级菜单，递归将二级菜单展示出来
           if (item.children && !item.action) {
             deep(item.children);
           }
         }
       };
-      // 拷贝的问题
       deep(JSON.parse(JSON.stringify(list)));
       this.actionMap = actionMap;
     },
